@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SecurityController {
     @GetMapping("/hello")
     public String hello() {
-        return "hello";
+        return "hellollllll";
     }
 
     @RequestMapping("/f1")
