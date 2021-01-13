@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
+
 
 /**
  * @ClassName ValidationController
@@ -19,7 +19,7 @@ import javax.validation.Valid;
 public class ValidationController {
 
     @PostMapping("/addUser")
-    public String addUser(@RequestBody @Valid User user) {
+    public String addUser(@RequestBody  User user) {
         //全局异常处理需要单独编写异常处理类
         //com\lxd\errConfig\ExceptionControllerAdvice.java
         return "success";

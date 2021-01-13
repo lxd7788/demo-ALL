@@ -1,7 +1,5 @@
 package com.lxd.APItoken;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -10,7 +8,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @ClassName TokenInterceptor
@@ -21,8 +18,8 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class TokenInterceptor extends HandlerInterceptorAdapter {
 
-    @Autowired
-    private RedisTemplate redisTemplate;
+//    @Autowired
+//    private RedisTemplate redisTemplate;
 
     /**
      *
@@ -50,7 +47,7 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
         Assert.isTrue(reqeustInterval < expireTime, "请求超时，请重新请求");
 
         // 3. 校验Token是否存在
-        ValueOperations<String, TokenInfo> tokenRedis = redisTemplate.opsForValue();
+        ValueOperations<String, TokenInfo> tokenRedis = null;
         TokenInfo tokenInfo = tokenRedis.get(token);
         Assert.notNull(tokenInfo, "token错误");
 
@@ -63,10 +60,10 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
 
         // 5. 拒绝重复调用(第一次访问时存储，过期时间和请求超时时间保持一致), 只有标注不允许重复提交注解的才会校验
         if (notRepeatSubmit != null) {
-            ValueOperations<String, Integer> signRedis = redisTemplate.opsForValue();
-            boolean exists = redisTemplate.hasKey(sign);
-            Assert.isTrue(!exists, "请勿重复提交");
-            signRedis.set(sign, 0, expireTime, TimeUnit.MILLISECONDS);
+//            ValueOperations<String, Integer> signRedis = redisTemplate.opsForValue();
+//            boolean exists = redisTemplate.hasKey(sign);
+//            Assert.isTrue(!exists, "请勿重复提交");
+//            signRedis.set(sign, 0, expireTime, TimeUnit.MILLISECONDS);
         }
 
         return super.preHandle(request, response, handler);
